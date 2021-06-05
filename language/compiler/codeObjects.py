@@ -272,8 +272,8 @@ class UnaryOperator:
 
 
 class Expression:
-    __T_LEFT_PAREN = 'left-parenthesis'
-    __T_RIGHT_PAREN = 'right-parenthesis'
+    __T_LEFT_PAREN = 'left-paren'
+    __T_RIGHT_PAREN = 'right-paren'
     __T_VARIABLE = 'variable'
     __T_CONSTANT = 'constant'
     __T_LITERAL = 'literal'
