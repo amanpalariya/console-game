@@ -1,0 +1,152 @@
+~init
+
+#X{
+#...#
+.#.#.
+..#..
+.#.#.
+#...#
+}
+
+#Y{
+#...#
+#...#
+.###.
+..#..
+..#..
+}
+
+#A{
+.###.
+#...#
+#...#
+#####
+#...#
+}
+
+#B{
+####.
+#...#
+#.##
+#...#
+####.
+}
+
+#sadFace{
+..#####..
+.#.....#.
+#..#.#..#
+#.......#
+#..###..#
+#.#...#.#
+.#.....#.
+..#####..
+}
+
+#happyFace{
+..#####..
+.#.....#.
+#..#.#..#
+#.......#
+#.#...#.#
+#..###..#
+.#.....#.
+..#####..
+}
+
+#emotionlessFace{
+..#####..
+.#.....#.
+#..#.#..#
+#.......#
+#.......#
+#.......#
+.#.....#.
+..#####..
+}
+
+~init{
+  $W = [!W]
+  $H = [!H]
+  $w = [5]
+  $h = [5]
+  $symbol = [-1]
+  goto ~pre
+}
+
+~pre{
+  $symbol = [$symbol+1]
+  if [$symbol=4] {
+    goto ~win
+  }
+  goto ~main_game
+}
+
+~main_game{
+  clear
+  @X{
+    if not [$symbol-0]{
+      goto ~pre
+    }
+    goto ~lose
+  }
+  @Y{
+    if not [$symbol-1]{
+      goto ~pre
+    }
+    goto ~lose
+  }
+  @A{
+    if not [$symbol-2]{
+      goto ~pre
+    }
+    goto ~lose
+  }
+  @B{
+    if not [$symbol-3]{
+      goto ~pre
+    }
+    goto ~lose
+  }
+  @START{
+    goto ~weird
+  }
+  clear
+  if not [$symbol-0] {
+    display #X @ ([($W-$w)/2], [($H-$h)/2])
+  }
+  if not [$symbol-1] {
+    display #Y @ ([($W-$w)/2], [($H-$h)/2])
+  }
+  if not [$symbol-2] {
+    display #A @ ([($W-$w)/2], [($H-$h)/2])
+  }
+  if not [$symbol-3] {
+    display #B @ ([($W-$w)/2], [($H-$h)/2])
+  }
+}
+
+~lose{
+  @START{
+    goto ~init
+  }
+  clear
+  display #sadFace @ ([($W-9)/2], [($H-8)/2])
+}
+
+~win{
+  @START{
+    goto ~init
+  }
+  clear
+  display #happyFace @ ([($W-9)/2], [($H-8)/2])
+}
+
+~weird{
+  @START{
+    goto ~init
+  }  
+    
+  clear
+  display #emotionlessFace @ ([($W-9)/2], [($H-8)/2])
+}    

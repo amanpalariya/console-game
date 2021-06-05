@@ -1,0 +1,258 @@
+~init
+
+#0{
+#####
+#...#
+#...#
+#...#
+#...#
+#...#
+#####
+}
+
+#1{
+.##..
+..#..
+..#..
+..#..
+..#..
+..#..
+#####
+}
+
+#2{
+#####
+....#
+....#
+....#
+#####
+#....
+#####
+}
+
+#3{
+#####
+....#
+....#
+#####
+....#
+....#
+#####
+}
+
+#4{
+...#.
+..##.
+.#.#.
+#..#.
+#####
+...#.
+...#.
+}
+
+#5{
+#####
+#....
+#....
+#####
+....#
+....#
+#####
+}
+
+#6{
+#####
+#....
+#....
+#####
+#...#
+#...#
+#####
+}
+
+#7{
+#####
+....#
+...#.
+..#..
+..#..
+..#..
+..#..
+}
+
+#8{
+#####
+#...#
+#...#
+#####
+#...#
+#...#
+#####
+}
+
+#9{
+#####
+#...#
+#...#
+#####
+....#
+....#
+#####
+}
+
+#infinity{
+.###...###.
+#...#.#...#
+#....#....#
+#...#.#...#
+.###...###.
+}
+
+
+~init{
+  $score = [0]
+  goto ~show
+}
+
+~show{
+  @X{
+    $score = [$score-10]
+    if [$score<0]{
+      $score = [0]
+    }
+  }
+  @B{
+    $score = [$score+10]
+    if [$score>100]{
+      $score = [100]
+    }
+  }
+  @Y{
+    $score = [$score+1]
+    if [$score>100]{
+      $score = [100]
+    }
+  }
+  @A{
+    $score = [$score-1]
+    if [$score<0]{
+      $score = [0]
+    }
+  }
+  @START{
+    $score = r[0][100]
+  }
+  $numberW = [5]
+  $numberH = [7]
+  $infinityW = [11]
+  $infinityH = [5]
+  clear
+  if [$score<10] {
+    $num = [$score]
+    $numX = [(!W - $numberW)/2]
+    $numY = [(!H - $numberH)/2]
+    if [$num=0]{
+      display #0 @ ([$numX], [$numY])
+    }
+    if [$num=1]{
+      display #1 @ ([$numX], [$numY])
+    }
+    if [$num=2]{
+      display #2 @ ([$numX], [$numY])
+    }
+    if [$num=3]{
+      display #3 @ ([$numX], [$numY])
+    }
+    if [$num=4]{
+      display #4 @ ([$numX], [$numY])
+    }
+    if [$num=5]{
+      display #5 @ ([$numX], [$numY])
+    }
+    if [$num=6]{
+      display #6 @ ([$numX], [$numY])
+    }
+    if [$num=7]{
+      display #7 @ ([$numX], [$numY])
+    }
+    if [$num=8]{
+      display #8 @ ([$numX], [$numY])
+    }
+    if [$num=9]{
+      display #9 @ ([$numX], [$numY])
+    }
+  }
+  if [($score<100) & ($score>=10)] {
+    $num = [$score/10]
+    $numX = [!W/2 - $numberW - 1]
+    $numY = [(!H - $numberH)/2]
+    if [$num=0]{
+      display #0 @ ([$numX], [$numY])
+    }
+    if [$num=1]{
+      display #1 @ ([$numX], [$numY])
+    }
+    if [$num=2]{
+      display #2 @ ([$numX], [$numY])
+    }
+    if [$num=3]{
+      display #3 @ ([$numX], [$numY])
+    }
+    if [$num=4]{
+      display #4 @ ([$numX], [$numY])
+    }
+    if [$num=5]{
+      display #5 @ ([$numX], [$numY])
+    }
+    if [$num=6]{
+      display #6 @ ([$numX], [$numY])
+    }
+    if [$num=7]{
+      display #7 @ ([$numX], [$numY])
+    }
+    if [$num=8]{
+      display #8 @ ([$numX], [$numY])
+    }
+    if [$num=9]{
+      display #9 @ ([$numX], [$numY])
+    }
+    $num = [$score%10]
+    $numX = [!W/2]
+    $numY = [(!H - $numberH)/2]
+    if [$num=0]{
+      display #0 @ ([$numX], [$numY])
+    }
+    if [$num=1]{
+      display #1 @ ([$numX], [$numY])
+    }
+    if [$num=2]{
+      display #2 @ ([$numX], [$numY])
+    }
+    if [$num=3]{
+      display #3 @ ([$numX], [$numY])
+    }
+    if [$num=4]{
+      display #4 @ ([$numX], [$numY])
+    }
+    if [$num=5]{
+      display #5 @ ([$numX], [$numY])
+    }
+    if [$num=6]{
+      display #6 @ ([$numX], [$numY])
+    }
+    if [$num=7]{
+      display #7 @ ([$numX], [$numY])
+    }
+    if [$num=8]{
+      display #8 @ ([$numX], [$numY])
+    }
+    if [$num=9]{
+      display #9 @ ([$numX], [$numY])
+    }
+  }
+  if [$score>=100]{
+    $numX = [(!W-$infinityW)/2]
+    $numY = [(!W-$infinityH)/2]
+    display #infinity @ ([$numX], [$numY])
+  }
+}

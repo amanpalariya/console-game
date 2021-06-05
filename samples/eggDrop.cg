@@ -1,0 +1,80 @@
+~init
+// Run this at 15 frames per second for optimal speed
+
+#saucer{
+#####
+}
+
+#egg{
+#
+}
+
+~init{
+    $saucerLength = [5]
+    $saucerX = [(!W-$saucerLength)/2]
+    $lives = [1]
+    $score = [0]
+
+    goto ~newball
+}
+
+~newball{
+    $eggY = [0]
+    $eggX = r[0][!W-1]
+
+    clear
+    display #saucer @ ([$saucerX], [!H-1])
+    display #egg @ ([$eggX], [$eggY])
+    goto ~game
+}
+
+~game{
+    $eggY = [$eggY+1]
+    clear
+    display #saucer @ ([$saucerX], [!H-1])
+    display #egg @ ([$eggX], [$eggY])
+    @X{
+        if [$saucerX~=0]{
+            $saucerX = [$saucerX-1]
+        }
+        if [$saucerX~=0]{
+            $saucerX = [$saucerX-1]
+        }
+    }
+    @B{
+        if [$saucerX~=(!H-5)]{
+            $saucerX = [$saucerX+1]
+        }
+        if [$saucerX~=(!H-5)]{
+            $saucerX = [$saucerX+1]
+        }
+    }
+    if [$eggY=(!H-1)]{
+      if [(($eggX-$saucerX)<$saucerLength) & (($eggX-$saucerX)>=0)]{
+          $score = [$score+1]
+          goto ~newball
+      }
+      goto ~game_over
+    }
+    if [$eggY=!H] {
+        $eggY = [0]
+        $eggX = r[0][!W-1]
+    }
+}
+
+~game_over{
+    @START{
+        goto ~game
+    }
+    clear
+    display #egg @ (r[0][!W-1], r[0][!H-1])
+    display #egg @ (r[0][!W-1], r[0][!H-1])
+    display #egg @ (r[0][!W-1], r[0][!H-1])
+    display #egg @ (r[0][!W-1], r[0][!H-1])
+    display #egg @ (r[0][!W-1], r[0][!H-1])
+    display #egg @ (r[0][!W-1], r[0][!H-1])
+    display #egg @ (r[0][!W-1], r[0][!H-1])
+    display #egg @ (r[0][!W-1], r[0][!H-1])
+    display #egg @ (r[0][!W-1], r[0][!H-1])
+    display #egg @ (r[0][!W-1], r[0][!H-1])
+}

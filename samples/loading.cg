@@ -1,0 +1,88 @@
+~init
+
+#loading1 {
+###
+#..
+##.
+}
+
+#loading2 {
+###
+#.#
+#..
+}
+
+#loading3 {
+###
+#.#
+..#
+}
+
+#loading4 {
+###
+..#
+.##
+}
+
+#loading5 {
+.##
+..#
+###
+}
+
+#loading6 {
+..#
+#.#
+###
+}
+
+#loading7 {
+#..
+#.#
+###
+}
+
+#loading8 {
+##.
+#..
+###
+}
+
+~init{
+  $w = [3]
+  $h = [3]
+  goto ~loading
+}
+
+~loading{
+    $frames = [$frames+1]
+    if [$frames>=(!FPS/4)]{ //This ensures that the the animations runs on the same speed for all frame rates>=4
+      $frames = [0]
+      clear
+      if [$i=0]{
+        display #loading1 @ ([(!W-$w)/2], [(!H-$h)/2])
+      }
+      if [$i=1]{
+        display #loading2 @ ([(!W-$w)/2], [(!H-$h)/2])
+      }
+      if [$i=2]{
+        display #loading3 @ ([(!W-$w)/2], [(!H-$h)/2])
+      }
+      if [$i=3]{
+        display #loading4 @ ([(!W-$w)/2], [(!H-$h)/2])
+      }
+      if [$i=4]{
+        display #loading5 @ ([(!W-$w)/2], [(!H-$h)/2])
+      }
+      if [$i=5]{
+        display #loading6 @ ([(!W-$w)/2], [(!H-$h)/2])
+      }
+      if [$i=6]{
+        display #loading7 @ ([(!W-$w)/2], [(!H-$h)/2])
+      }
+      if [$i=7]{
+        display #loading8 @ ([(!W-$w)/2], [(!H-$h)/2])
+      }
+      $i = [($i+1)%8]
+    }
+}

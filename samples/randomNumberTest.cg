@@ -1,0 +1,34 @@
+~init
+
+#dot {
+.###.
+#+++#
+#+#+#
+#+++#
+.###.
+}
+
+~init{
+  @X{
+    $stop = [~$stop]
+  }
+  @Y{
+    $stop = [~$stop]
+  }
+  @A{
+    $stop = [~$stop]
+  }
+  @B{
+    $stop = [~$stop]
+  }
+  @START{
+    $stop = [~$stop]
+  }
+
+  if not [$stop]{
+    $x = r[0][!W-5]
+    $y = r[0][!H-5]
+  }
+  clear
+  display #dot @ ([$x], [$y])
+}

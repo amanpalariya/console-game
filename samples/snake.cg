@@ -1,0 +1,108 @@
+~init
+
+#dot{
+#
+}
+
+~init{
+  $left = [0]
+  $right = [1]
+  $up = [2]
+  $down = [3]
+  $direction = [$right]
+
+  $snake5x = [0]
+  $snake4x = [0]
+  $snake3x = [0]
+  $snake2x = [0]
+  $snake1x = [0]
+  $snake0x = [0]
+
+  $snake5y = [0]
+  $snake4y = [0]
+  $snake3y = [0]
+  $snake2y = [0]
+  $snake1y = [0]
+  $snake0y = [0]
+
+  $foodX = r[0][!W/2]
+  $foodY = r[0][!H/2]
+
+  $speedFactor = [3]
+  $maxSpeedFactor = [10]
+
+  goto ~main
+}
+
+~main{
+  @X{
+    if not [($snake0y=$snake1y) & ((($snake1x+1)%!W)=$snake0x)]{
+      $direction = [$left]
+    }
+  }
+  @B{
+    if not [($snake0y=$snake1y) & ((($snake1x-1)%!W)=$snake0x)]{
+      $direction = [$right]
+    }
+  }
+  @Y{
+    if not [($snake0x=$snake1x) & ((($snake1y+1)%!H)=$snake0y)]{
+      $direction = [$up]
+    }
+  }
+  @A{
+    if not [($snake0x=$snake1x) & ((($snake1y-1)%!H)=$snake0y)]{
+      $direction = [$down]
+    }
+  }
+
+  $frames = [$frames+1]
+  if [$frames>=(!FPS/($speedFactor*2))]{
+    $frames = [0]
+    $snake5x = [$snake4x]
+    $snake4x = [$snake3x]
+    $snake3x = [$snake2x]
+    $snake2x = [$snake1x]
+    $snake1x = [$snake0x]
+
+    $snake5y = [$snake4y]
+    $snake4y = [$snake3y]
+    $snake3y = [$snake2y]
+    $snake2y = [$snake1y]
+    $snake1y = [$snake0y]
+    
+    if [$direction=$left]{
+      $snake0x = [($snake0x-1)%!W]
+    }
+    if [$direction=$right]{
+      $snake0x = [($snake0x+1)%!W]
+    }
+    if [$direction=$up]{
+      $snake0y = [($snake0y-1)%!H]
+    }
+    if [$direction=$down]{
+      $snake0y = [($snake0y+1)%!H]
+    }
+
+    $isFoodEaten = [(($snake0x=$foodX)&($snake0y=$foodY))|(($snake1x=$foodX)&($snake1y=$foodY))|(($snake2x=$foodX)&($snake3y=$foodY))|(($snake3x=$foodX)&($snake3y=$foodY))|(($snake4x=$foodX)&($snake4y=$foodY))|(($snake5x=$foodX)&($snake5y=$foodY))]
+
+    if [$isFoodEaten] {
+      $foodX = r[0][!W-1]
+      $foodY = r[0][!H-1]
+
+      if [$speedFactor<$maxSpeedFactor]{
+        $speedFactor = [$speedFactor+1]
+      }
+    }
+
+    clear
+    display #dot @ ([$snake0x], [$snake0y])
+    display #dot @ ([$snake1x], [$snake1y])
+    display #dot @ ([$snake2x], [$snake2y])
+    display #dot @ ([$snake3x], [$snake3y])
+    display #dot @ ([$snake4x], [$snake4y])
+    display #dot @ ([$snake5x], [$snake5y])
+
+    display #dot @ ([$foodX], [$foodY])
+  }
+}
