@@ -337,13 +337,14 @@ class Expression:
                 pushNumber(numStack.pop())
                 prevWasNumber = True
             elif token == self.__T_OPERATOR:
-                currentOp = lexeme
                 if prevWasNumber:
-                    while len(opStack) > 0 and type(opStack[-1]) == BinaryOperator:
+                    currentOp = BinaryOperator(lexeme)
+                    while len(opStack) > 0 and type(opStack[-1]) == BinaryOperator and opStack[-1].getPrecedence()>=currentOp.getPrecedence():
                         evalLast()
-                    opStack.append(BinaryOperator(currentOp))
+                    opStack.append(currentOp)
                 else:
-                    opStack.append(UnaryOperator(currentOp))
+                    currentOp = UnaryOperator(lexeme)
+                    opStack.append(currentOp)
                 prevWasNumber = False
             elif token == self.__T_LITERAL:
                 number = int(lexeme)
