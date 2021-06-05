@@ -285,7 +285,7 @@ class Expression:
         TokenizingRule(__T_VARIABLE, re.compile(r"\$[\w\d_]+")),
         TokenizingRule(__T_CONSTANT, re.compile(r"![\w\d_]+")),
         TokenizingRule(__T_OPERATOR, re.compile(
-            r"(>=|<=|>|<|~=|=|&|\||\+|-|\*|/|%)")),
+            r"(>=|<=|>|<|~=|=|&|\||~|\+|-|\*|/|%)")),
         TokenizingRule(__T_LITERAL, re.compile(r"\d+")),
     ]
 
