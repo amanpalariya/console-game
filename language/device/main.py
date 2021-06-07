@@ -6,9 +6,19 @@ from collections import namedtuple
 from pygame.locals import *
 from . import colors
 from enum import Enum
+import platform
 
 Size = namedtuple('Size', ['width', 'height'])
 Position = namedtuple('Position', ['x', 'y'])
+
+
+def isWindowsPlatform():
+    return platform.system() == 'Windows'
+
+
+def preventWindowScalingInWindows():
+    import ctypes
+    ctypes.windll.user32.SetProcessDPIAware()
 
 
 class PixelState(Enum):
@@ -20,21 +30,27 @@ class PixelState(Enum):
 class RetroConsole:
     def __init__(self, game, W, H, fps):
         assert W >= 1 and H >= 1 and fps >= 1, "Width, height and FPS must be positive integers"
+        if isWindowsPlatform():
+            preventWindowScalingInWindows()
         W = int(W)
         H = int(H)
         fps = int(fps)
         if not (game.getWidth() == W and game.getHeight() == H and game.getFps() == fps):
-            raise Exception(f"Game ({game.getWidth()}×{game.getHeight()} @ {game.getFps()}Hz) does not support this device ({W}×{H} @ {fps}Hz)")
+            raise Exception(
+                f"Game ({game.getWidth()}×{game.getHeight()} @ {game.getFps()}Hz) does not support this device ({W}×{H} @ {fps}Hz)")
         self.__clockFrequencyInHertz = fps
         self.__displaySizeInPixels = Size(W, H)
 
-        width = 640
-        height = int(13/9*width)
+        height = 800
+        width = int(9/13*height)
         self.__pygameSurfaceSize = Size(width, height)
         self.__margin = int(self.__pygameSurfaceSize.width*0.1)
-        self.__buttonAreaSize = Size(self.__pygameSurfaceSize.width - 2*self.__margin, int((self.__pygameSurfaceSize.height - 2*self.__margin)*0.3))
-        self.__screenAreaSize = Size(self.__pygameSurfaceSize.width - 2*self.__margin, int((self.__pygameSurfaceSize.height - 2*self.__margin)*0.7))
-        self.__pixelSize = min(self.__screenAreaSize.width//W, self.__screenAreaSize.height//H)
+        self.__buttonAreaSize = Size(self.__pygameSurfaceSize.width - 2*self.__margin, int(
+            (self.__pygameSurfaceSize.height - 2*self.__margin)*0.3))
+        self.__screenAreaSize = Size(self.__pygameSurfaceSize.width - 2*self.__margin, int(
+            (self.__pygameSurfaceSize.height - 2*self.__margin)*0.7))
+        self.__pixelSize = min(self.__screenAreaSize.width //
+                               W, self.__screenAreaSize.height//H)
 
         self.__bodyColor = colors.blue700
         self.__bodyTextureColor = colors.blue800
@@ -67,7 +83,8 @@ class RetroConsole:
             self.__pygameSurfaceSize)
         sizeString = f"{self.__displaySizeInPixels.width}×{self.__displaySizeInPixels.height}"
         freqString = f"{self.__clockFrequencyInHertz}Hz"
-        pygame.display.set_caption(f"Retro Console - {sizeString} @ {freqString}")
+        pygame.display.set_caption(
+            f"Retro Console - {sizeString} @ {freqString}")
         while self.__isRunning:
             self.__checkQuitEvent()
             self.__checkButtonPress()
@@ -158,8 +175,11 @@ class RetroConsole:
         strokeSize = 10
         strokeWidth = 2
         strokeColor = self.__bodyTextureColor
-        def getStroke1End(position): return Position(position.x + strokeSize, position.y + strokeSize)
-        def getStroke2End(position): return Position(position.x - strokeSize, position.y + strokeSize)
+
+        def getStroke1End(position): return Position(
+            position.x + strokeSize, position.y + strokeSize)
+        def getStroke2End(position): return Position(
+            position.x - strokeSize, position.y + strokeSize)
         for x in range(0, self.__pygameSurfaceSize.width, 2*strokeSize):
             for y in range(0, self.__pygameSurfaceSize.height, 2*strokeSize):
                 start = Position(x, y)
@@ -241,7 +261,8 @@ class RetroConsole:
                                       1/4, self.__pygameSurfaceSize.height - bottomMargin - buttonAreaSize.height*1/2)
         lengthOfPowerButton = min(
             buttonRadius*2.5, buttonAreaSize.width/2 - 2*buttonRadius)
-        buttonOffsetFromCenter = min(buttonRadius*1.5, buttonAreaSize.height/2 - buttonRadius)
+        buttonOffsetFromCenter = min(
+            buttonRadius*1.5, buttonAreaSize.height/2 - buttonRadius)
         buttonRadius = min(buttonAreaSize.height/8, 25)
         buttonRadius = 30
         self.__drawCapsuleButton(
@@ -255,8 +276,10 @@ class RetroConsole:
         # gfxdraw may be removed in future versions of PyGame
         # The code in the next line is the legacy code for creating non-anti-aliased circles
         # pygame.draw.circle(self.__displaySurface, color, position, radius)
-        gfxdraw.aacircle(self.__displaySurface, int(position.x), int(position.y), int(radius), Color((color << 8) + 0xff))
-        gfxdraw.filled_circle(self.__displaySurface, int(position.x), int(position.y), int(radius), Color((color << 8) + 0xff))
+        gfxdraw.aacircle(self.__displaySurface, int(position.x), int(
+            position.y), int(radius), Color((color << 8) + 0xff))
+        gfxdraw.filled_circle(self.__displaySurface, int(position.x), int(
+            position.y), int(radius), Color((color << 8) + 0xff))
 
     def __drawRect(self, position: Position, size: Size, color):
         pygame.draw.rect(self.__displaySurface, color, (*position, *size))
@@ -277,17 +300,26 @@ class RetroConsole:
         h = 2*radius
         offset = self.__buttonHoleGap
 
-        self.__drawRect(Position(basePosition.x - w/2 - offset, basePosition.y - h/2 - offset), Size(w+offset*2, h+offset*2), buttonHoleColor)
-        self.__drawCircle(Position(basePosition.x - w/2, basePosition.y), radius + offset, buttonHoleColor)
-        self.__drawCircle(Position(basePosition.x + w/2, basePosition.y), radius + offset, buttonHoleColor)
+        self.__drawRect(Position(basePosition.x - w/2 - offset, basePosition.y -
+                        h/2 - offset), Size(w+offset*2, h+offset*2), buttonHoleColor)
+        self.__drawCircle(Position(basePosition.x - w/2,
+                          basePosition.y), radius + offset, buttonHoleColor)
+        self.__drawCircle(Position(basePosition.x + w/2,
+                          basePosition.y), radius + offset, buttonHoleColor)
 
-        self.__drawRect(Position(basePosition.x - w/2, basePosition.y - h/2), Size(w, h), buttonSideColor)
-        self.__drawCircle(Position(basePosition.x - w/2, basePosition.y), radius, buttonSideColor)
-        self.__drawCircle(Position(basePosition.x + w/2, basePosition.y), radius, buttonSideColor)
+        self.__drawRect(Position(basePosition.x - w/2,
+                        basePosition.y - h/2), Size(w, h), buttonSideColor)
+        self.__drawCircle(Position(basePosition.x - w/2,
+                          basePosition.y), radius, buttonSideColor)
+        self.__drawCircle(Position(basePosition.x + w/2,
+                          basePosition.y), radius, buttonSideColor)
 
-        self.__drawRect(Position(finalPosition.x - w/2, finalPosition.y - h/2), Size(w, h), buttonColor)
-        self.__drawCircle(Position(finalPosition.x - w/2, finalPosition.y), radius, buttonColor)
-        self.__drawCircle(Position(finalPosition.x + w/2, finalPosition.y), radius, buttonColor)
+        self.__drawRect(Position(finalPosition.x - w/2,
+                        finalPosition.y - h/2), Size(w, h), buttonColor)
+        self.__drawCircle(Position(finalPosition.x - w/2,
+                          finalPosition.y), radius, buttonColor)
+        self.__drawCircle(Position(finalPosition.x + w/2,
+                          finalPosition.y), radius, buttonColor)
 
         self.__drawText(label, finalPosition, int(radius), labelColor)
 
