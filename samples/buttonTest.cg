@@ -85,25 +85,25 @@
 ~main_game{
   clear
   @X{
-    if not [$symbol-0]{
+    if [$symbol=0]{
       goto ~pre
     }
     goto ~lose
   }
   @Y{
-    if not [$symbol-1]{
+    if [$symbol=1]{
       goto ~pre
     }
     goto ~lose
   }
   @A{
-    if not [$symbol-2]{
+    if [$symbol=2]{
       goto ~pre
     }
     goto ~lose
   }
   @B{
-    if not [$symbol-3]{
+    if [$symbol=3]{
       goto ~pre
     }
     goto ~lose
@@ -112,16 +112,16 @@
     goto ~weird
   }
   clear
-  if not [$symbol-0] {
+  if [$symbol=0] {
     display #X @ ([($W-$w)/2], [($H-$h)/2])
   }
-  if not [$symbol-1] {
+  if [$symbol=1] {
     display #Y @ ([($W-$w)/2], [($H-$h)/2])
   }
-  if not [$symbol-2] {
+  if [$symbol=2] {
     display #A @ ([($W-$w)/2], [($H-$h)/2])
   }
-  if not [$symbol-3] {
+  if [$symbol=3] {
     display #B @ ([($W-$w)/2], [($H-$h)/2])
   }
 }
