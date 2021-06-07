@@ -16,7 +16,7 @@ The `samples` directory contains some sample codes.
 ## How to run?
 
 ### Prerequisite
-The simulator need [PyGame] module to run.
+The simulator need [PyGame] 2.0+ to run.
 It has been tested on Python 3.8.6.
 
 Considering that you have the code written in the file `code.gb`, you can run the code by running the following command.
