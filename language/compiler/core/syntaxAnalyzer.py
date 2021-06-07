@@ -190,7 +190,7 @@ class SyntaxAnalyzer:
 
     def parse(self):
         self.__generateActionAndGotoTables()
-        self.__parseStack: Symbol = []
+        self.__parseStack: [Symbol] = []
         self.__stateStack: [int] = [0]
         tokenAndLexeme: TokenAndLexeme = self.__getNextTokenAndLexeme()
         while True:
