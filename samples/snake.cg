@@ -84,7 +84,7 @@
       $snake0y = [($snake0y+1)%!H]
     }
 
-    $isFoodEaten = [(($snake0x=$foodX)&($snake0y=$foodY))|(($snake1x=$foodX)&($snake1y=$foodY))|(($snake2x=$foodX)&($snake3y=$foodY))|(($snake3x=$foodX)&($snake3y=$foodY))|(($snake4x=$foodX)&($snake4y=$foodY))|(($snake5x=$foodX)&($snake5y=$foodY))]
+    $isFoodEaten = [($snake0x=$foodX)&($snake0y=$foodY)]
 
     if [$isFoodEaten] {
       $foodX = r[0][!W-1]
