@@ -47,7 +47,7 @@ NT_SCREEN_UPDATE_STMT = 'screen-update-stmt'
 NT_GOTO_STMT = 'goto-stmt'
 NT_EXPR = 'expression'
 
-NT_IF_STMTS = 'if-stmts'
+NT_SELECTION_STMT = 'selection-stmt'
 NT_IF_STMT = 'if-stmt'
 NT_IF_NOT_STMT = 'if-not-stmt'
 NT_INIF_STMTS = 'inif-stmts'

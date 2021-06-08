@@ -100,7 +100,7 @@ class SemanticAnalyzer:
             gotoStmt, = children
             statement = self.__gotoStmt(gotoStmt.children)
             return [statement], {}
-        elif children[0].token == NT_IF_STMTS:
+        elif children[0].token == NT_SELECTION_STMT:
             ifStmts, = children
             statement = self.__ifStmts(ifStmts.children)
             return [statement], {}
@@ -174,7 +174,7 @@ class SemanticAnalyzer:
         elif children[0].token == NT_GOTO_STMT:
             gotoStmt, = children
             return self.__gotoStmt(gotoStmt.children)
-        elif children[0].token == NT_IF_STMTS:
+        elif children[0].token == NT_SELECTION_STMT:
             ifStmts, = children
             return self.__ifStmts(ifStmts.children)
 
@@ -205,6 +205,6 @@ class SemanticAnalyzer:
         elif children[0].token == NT_GOTO_STMT:
             gotoStmt, = children
             return self.__gotoStmt(gotoStmt.children)
-        elif children[0].token == NT_IF_STMTS:
+        elif children[0].token == NT_SELECTION_STMT:
             ifStmts, = children
             return self.__ifStmts(ifStmts.children)
