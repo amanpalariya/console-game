@@ -1,0 +1,19 @@
+~board
+
+#dot{
+#
+}
+
+~board{
+  clear
+
+  $y = [0]
+  while [$y<!H] {
+    $x = [$y%2]
+    while [$x<!W]{
+      display #dot @ ([$x], [$y])
+      $x = [$x+2]
+    }
+    $y = [$y+1]
+  }
+}
