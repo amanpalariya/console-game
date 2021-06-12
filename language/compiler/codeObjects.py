@@ -423,6 +423,32 @@ class IfNotStatement(SelectionStatement):
     def _conditionIsTrue(self, game):
         return self._conditionExpr.getValue(game) == 0
 
+class IterationStatement(Statement):
+
+    def __init__(self, conditionExpr: Expression, statementsBlock: StatementsBlock):
+        self._conditionExpr = conditionExpr
+        self._statementsBlock = statementsBlock
+
+    def _conditionIsTrue(self, game):
+        raise Exception("_conditionIsTrue method not implemented")
+
+    def run(self, game):
+        while self._conditionIsTrue(game):
+            shouldMoveToNextIteration = self._statementsBlock.run(game)
+            if not shouldMoveToNextIteration:
+                return False
+        return True
+
+
+class WhileStatement(IterationStatement):
+    def _conditionIsTrue(self, game):
+        return self._conditionExpr.getValue(game) != 0
+
+
+class WhileNotStatement(IterationStatement):
+    def _conditionIsTrue(self, game):
+        return self._conditionExpr.getValue(game) == 0
+
 
 class ScreenUpdateStatement(Statement):
 

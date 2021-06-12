@@ -101,8 +101,12 @@ class SemanticAnalyzer:
             statement = self.__gotoStmt(gotoStmt.children)
             return [statement], {}
         elif children[0].token == NT_SELECTION_STMT:
-            ifStmts, = children
-            statement = self.__ifStmts(ifStmts.children)
+            selectionStmt, = children
+            statement = self.__selectionStmt(selectionStmt.children)
+            return [statement], {}
+        elif children[0].token == NT_ITERATION_STMT:
+            iterationStmt, = children
+            statement = self.__iterationStmt(iterationStmt.children)
             return [statement], {}
         elif children[0].token == NT_BTN_HANDLER:
             btnHandler, = children
@@ -133,7 +137,7 @@ class SemanticAnalyzer:
         _, stateName = children
         return GotoStatement(stateName.lexeme)
 
-    def __ifStmts(self, children):
+    def __selectionStmt(self, children):
         if children[0].token == NT_IF_STMT:
             ifStmt, = children
             return self.__ifStmt(ifStmt.children)
@@ -175,8 +179,59 @@ class SemanticAnalyzer:
             gotoStmt, = children
             return self.__gotoStmt(gotoStmt.children)
         elif children[0].token == NT_SELECTION_STMT:
-            ifStmts, = children
-            return self.__ifStmts(ifStmts.children)
+            selectionStmt, = children
+            return self.__selectionStmt(selectionStmt.children)
+        elif children[0].token == NT_ITERATION_STMT:
+            iterationStmt, = children
+            return self.__iterationStmt(iterationStmt.children)
+
+    def __iterationStmt(self, children):
+        if children[0].token == NT_WHILE_STMT:
+            whileStmt, = children
+            return self.__whileStmt(whileStmt.children)
+        elif children[0].token == NT_WHILE_NOT_STMT:
+            whileNotStmt, = children
+            return self.__whileNotStmt(whileNotStmt.children)
+
+    def __whileStmt(self, children):
+        _, conditionExpr, _, _, inwhileStmts, _, _ = children
+        statements = self.__inwhileStmts(inwhileStmts.children)
+        conditionExpr = self.__expr(conditionExpr.children)
+        return WhileStatement(conditionExpr, StatementsBlock(statements))
+
+    def __whileNotStmt(self, children):
+        _, _, conditionExpr, _, _, inwhileStmts, _, _ = children
+        statements = self.__inwhileStmts(inwhileStmts.children)
+        conditionExpr = self.__expr(conditionExpr.children)
+        return WhileNotStatement(conditionExpr, StatementsBlock(statements))
+
+    def __inwhileStmts(self, children):
+        if children[0].token == NT_INWHILE_STMTS:
+            inwhileStmts, _, inwhileStmt = children
+            statements = self.__inwhileStmts(inwhileStmts.children)
+            statement = self.__inwhileStmt(inwhileStmt.children)
+            return [*statements, statement]
+        elif children[0].token == NT_INWHILE_STMT:
+            inwhileStmt, = children
+            statement = self.__inwhileStmt(inwhileStmt.children)
+            return [statement]
+
+    def __inwhileStmt(self, children):
+        if children[0].token == NT_VARIABLE_ASSIGN_STMT:
+            variableAssignStmt, = children
+            return self.__variableAssignStmt(variableAssignStmt.children)
+        elif children[0].token == NT_SCREEN_UPDATE_STMT:
+            screenUpdateStmt, = children
+            return self.__screenUpdateStmt(screenUpdateStmt.children)
+        elif children[0].token == NT_GOTO_STMT:
+            gotoStmt, = children
+            return self.__gotoStmt(gotoStmt.children)
+        elif children[0].token == NT_SELECTION_STMT:
+            selectionStmt, = children
+            return self.__selectionStmt(selectionStmt.children)
+        elif children[0].token == NT_ITERATION_STMT:
+            iterationStmt, = children
+            return self.__iterationStmt(iterationStmt.children)
 
     def __btnHandler(self, children):
         handlerName, _, _, inhandlerStmts, _, _ = children
@@ -206,5 +261,8 @@ class SemanticAnalyzer:
             gotoStmt, = children
             return self.__gotoStmt(gotoStmt.children)
         elif children[0].token == NT_SELECTION_STMT:
-            ifStmts, = children
-            return self.__ifStmts(ifStmts.children)
+            selectionStmt, = children
+            return self.__selectionStmt(selectionStmt.children)
+        elif children[0].token == NT_ITERATION_STMT:
+            iterationStmt, = children
+            return self.__iterationStmt(iterationStmt.children)

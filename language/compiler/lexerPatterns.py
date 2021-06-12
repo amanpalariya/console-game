@@ -8,6 +8,7 @@ tokenizingRules = [
     TokenizingRule(T_CLEAR, re.compile(r"clear")),
     TokenizingRule(T_DISPLAY, re.compile(r"display")),
     TokenizingRule(T_IF, re.compile(r"if")),
+    TokenizingRule(T_WHILE, re.compile(r"while")),
     TokenizingRule(T_NOT, re.compile(r"not")),
     TokenizingRule(T_RAND, re.compile(r"r")),
 

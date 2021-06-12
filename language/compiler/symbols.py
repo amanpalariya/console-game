@@ -28,6 +28,8 @@ T_GOTO = 'goto'
 T_IF = 'if'
 T_NOT = 'not'
 
+T_WHILE = 'while'
+
 T_NEWLINE = 'newline'
 
 # Non-terminals
@@ -52,6 +54,12 @@ NT_IF_STMT = 'if-stmt'
 NT_IF_NOT_STMT = 'if-not-stmt'
 NT_INIF_STMTS = 'inif-stmts'
 NT_INIF_STMT = 'inif-stmt'
+
+NT_ITERATION_STMT = 'iteration-stmt'
+NT_WHILE_STMT = 'while-stmt'
+NT_WHILE_NOT_STMT = 'while-not-stmt'
+NT_INWHILE_STMTS = 'inwhile-stmts'
+NT_INWHILE_STMT = 'inwhile-stmt'
 
 NT_BTN_HANDLER = 'btn-handler'
 NT_INHANDLER_STMTS = 'inhandler-stmts'

@@ -40,6 +40,7 @@ grammar.add(NT_INSTATE_STMT,
             GrammarRuleRhs(nt(NT_SCREEN_UPDATE_STMT)),
             GrammarRuleRhs(nt(NT_GOTO_STMT)),
             GrammarRuleRhs(nt(NT_SELECTION_STMT)),
+            GrammarRuleRhs(nt(NT_ITERATION_STMT)),
             GrammarRuleRhs(nt(NT_BTN_HANDLER)),
             )
 grammar.add(NT_EXPR,
@@ -75,6 +76,28 @@ grammar.add(NT_INIF_STMT,
             GrammarRuleRhs(nt(NT_SCREEN_UPDATE_STMT)),
             GrammarRuleRhs(nt(NT_GOTO_STMT)),
             GrammarRuleRhs(nt(NT_SELECTION_STMT)),
+            GrammarRuleRhs(nt(NT_ITERATION_STMT)),
+            )
+grammar.add(NT_ITERATION_STMT,
+            GrammarRuleRhs(nt(NT_WHILE_STMT)),
+            GrammarRuleRhs(nt(NT_WHILE_NOT_STMT)),
+            )
+grammar.add(NT_WHILE_STMT,
+            GrammarRuleRhs(t(T_WHILE), nt(NT_EXPR), t(T_LEFT_BRACE), NL, nt(NT_INWHILE_STMTS), NL, t(T_RIGHT_BRACE)),
+            )
+grammar.add(NT_WHILE_NOT_STMT,
+            GrammarRuleRhs(t(T_WHILE), t(T_NOT), nt(NT_EXPR), t(T_LEFT_BRACE), NL, nt(NT_INWHILE_STMTS), NL, t(T_RIGHT_BRACE)),
+            )
+grammar.add(NT_INWHILE_STMTS,
+            GrammarRuleRhs(nt(NT_INWHILE_STMTS), NL, nt(NT_INWHILE_STMT)),
+            GrammarRuleRhs(nt(NT_INWHILE_STMT)),
+            )
+grammar.add(NT_INWHILE_STMT,
+            GrammarRuleRhs(nt(NT_VARIABLE_ASSIGN_STMT)),
+            GrammarRuleRhs(nt(NT_SCREEN_UPDATE_STMT)),
+            GrammarRuleRhs(nt(NT_GOTO_STMT)),
+            GrammarRuleRhs(nt(NT_SELECTION_STMT)),
+            GrammarRuleRhs(nt(NT_ITERATION_STMT)),
             )
 grammar.add(NT_BTN_HANDLER,
             GrammarRuleRhs(t(T_HANDLER_NAME), t(T_LEFT_BRACE), NL, nt(NT_INHANDLER_STMTS), NL, t(T_RIGHT_BRACE)),
