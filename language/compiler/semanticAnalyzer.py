@@ -74,7 +74,7 @@ class SemanticAnalyzer:
     def __stateDef(self, children):
         stateName, _, _, instateStmts, _, _ = children
         statements, handlers = self.__instateStmts(instateStmts.children)
-        return stateName.lexeme, GameState(statements, handlers)
+        return stateName.lexeme, GameState(StatementsBlock(statements), handlers)
 
     def __instateStmts(self, children):
         if children[0].token == NT_INSTATE_STMTS:
@@ -145,13 +145,13 @@ class SemanticAnalyzer:
         _, conditionExpr, _, _, inifStmts, _, _ = children
         statements = self.__inifStmts(inifStmts.children)
         conditionExpr = self.__expr(conditionExpr.children)
-        return IfStatement(conditionExpr, statements)
+        return IfStatement(conditionExpr, StatementsBlock(statements))
 
     def __ifNotStmt(self, children):
         _, _, conditionExpr, _, _, inifStmts, _, _ = children
         statements = self.__inifStmts(inifStmts.children)
         conditionExpr = self.__expr(conditionExpr.children)
-        return IfNotStatement(conditionExpr, statements)
+        return IfNotStatement(conditionExpr, StatementsBlock(statements))
 
     def __inifStmts(self, children):
         if children[0].token == NT_INIF_STMTS:

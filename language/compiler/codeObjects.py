@@ -172,11 +172,21 @@ class Statement:
     def run(self, game) -> bool:
         raise Exception("`run` method not implemented")
 
+class StatementsBlock:
+    def __init__(self, statements: [Statement]):
+        self.__statements = statements
+
+    def run(self, game):
+        for stmt in self.__statements:
+            shouldMoveToNextStatement = stmt.run(game)
+            if not shouldMoveToNextStatement:
+                return False
+        return True
 
 class GameState:
 
-    def __init__(self, statements: [Statement], buttonHandler):
-        self.__statements = statements
+    def __init__(self, statementsBlock: StatementsBlock, buttonHandler):
+        self.__statementsBlock = statementsBlock
         self.__buttonHandlers = buttonHandler
 
     def __onButtonPressed(self, game, button: Button):
@@ -201,11 +211,7 @@ class GameState:
         self.__onButtonPressed(game, Button.START)
 
     def run(self, game):
-        for stmt in self.__statements:
-            shouldMoveToNextStatement = stmt.run(game)
-            if not shouldMoveToNextStatement:
-                return
-
+        return self.__statementsBlock.run(game)
 
 class BinaryOperator:
 
@@ -395,19 +401,16 @@ class VariableUpdateStatement(Statement):
 
 class SelectionStatement(Statement):
 
-    def __init__(self, conditionExpr: Expression, statements: [Statement]):
+    def __init__(self, conditionExpr: Expression, statementsBlock: StatementsBlock):
         self._conditionExpr = conditionExpr
-        self._statements = statements
+        self._statementsBlock = statementsBlock
 
     def _conditionIsTrue(self, game):
         raise Exception("_conditionIsTrue method not implemented")
 
     def run(self, game):
         if self._conditionIsTrue(game):
-            for stmt in self._statements:
-                moveToNextStatement = stmt.run(game)
-                if not moveToNextStatement:
-                    return False
+            return self._statementsBlock.run(game)
         return True
 
 
