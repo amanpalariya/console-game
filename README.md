@@ -192,6 +192,19 @@ if not [$x>10]{
 > The body of an `if` statement cannot be empty.
 > There is no `else` statement present in the language.
 
+### Iteration
+The language provides `while` and `while not` for iterations.
+In case of an infinite loop, the device freezes.
+
+Here is an example
+```c
+$x = [0]
+while [$x<5]{
+  // Statements
+  $x = [$x+1]
+}
+```
+
 ### Screen update
 There are two commands for updating the screen - `clear` and `display`.
 
@@ -241,7 +254,6 @@ Please provide a minimum reproducible example.
 # Features on the queue
 We are looking forward to implement the following features in the future.
 
-- [ ] A `while` loop
 - [ ] An optional `else` with `if`
 
 [PyGame]: https://www.pygame.org/
