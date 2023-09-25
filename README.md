@@ -6,7 +6,7 @@ Jump to the **The Language** section to learn how to code in this language.
 The `samples` directory contains a few sample code files, please try running them to understand the working.
 
 ## Technical details
-The core implements a RegEx based lexical analyzer and an LR(0) parser.
+The core implements a RegEx-based lexical analyzer and an LR(0) parser.
 The grammar is defined in a form similar to BNF.
 
 ## Project Structure
@@ -16,20 +16,20 @@ The `samples` directory contains some sample codes.
 ## How to run?
 
 ### Prerequisite
-The simulator need [PyGame] 2.0+ to run.
+The simulator needs [PyGame] 2.0+ to run.
 It has been tested on Python 3.8.6.
 
-Considering that you have the code written in the file `code.gb`, you can run the code by running the following command.
+Considering that you have the code written in the file `code.cg`, you can run the code by running the following command.
 
 ```
-python3 language/runner.py code.gb
+python3 language/runner.py code.cg
 ```
 
 The above command will run the game on a 30×30 console at 30 frames per second.
-To run with custom configuration (say 30×20 at 10 frames per second), use the following command
+To run with a custom configuration (say 30×20 at 10 frames per second), use the following command
 
 ```
-python3 language/runner.py code.gb 30 20 10
+python3 language/runner.py code.cg 30 20 10
 ```
 
 # Runtime Environment
@@ -56,9 +56,9 @@ The language provides commands to display shapes on the screen.
 
 ## Processing
 The console is driven by a clock whose frequency is decided during compile time.
-At every tick, code corresponding to the current state is executed - computation, updating display, changing the state, etc.
+At every tick, code corresponding to the current state is executed - computation, updating the display, changing the state, etc.
 
-> The games may run at different speed at different frequencies.
+> The games may run at different speeds at different frequencies.
 
 # The Language
 
@@ -74,10 +74,10 @@ The first line of the file must be the name of the initial state.
 ## Comments
 Anything followed by a `//` until the end of the line is considered a comment.
 Comments cannot appear at the beginning of the file.
-They must be present after initial state declaration.
+They must be present after the initial state declaration.
 
 ## Shape
-A shape is a 2D collection of pixel color (black, white, or transparent).
+A shape is a 2D collection of pixel colors (black, white, or transparent).
 The shapes can be painted(overlaid) on a screen.
 
 A shape can be defined as follows.
@@ -93,7 +93,7 @@ A shape can be defined as follows.
 ```
 Here, `#disc` is the name of the shape. `#` represents a black pixel, `+` represents a white pixel, and `.` represents a transparent pixel.
 
-Shape name is a `#` followed by one or more alphanumeric or underscore character.
+Shape name is a `#` followed by one or more alphanumeric or underscore characters.
 
 > Shapes can be defined only at the root of the document.
 
@@ -109,13 +109,13 @@ Variable assignment, button handling, state change, and display update statement
 
 Here, `~firstState` is the name of the state.
 
-State name is a `~` followed by one or more alphanumeric or underscore character.
+A state name is a `~` followed by one or more alphanumeric or underscore characters.
 
 ### Variable
-Variables can store intergers only and are global in scope.
+Variables can store integers only and are global in scope.
 If not defined, variables default to 0.
 
-Here is an example of variable assignment
+Here is an example of a variable assignment
 
 ```c
 $four = [2+2]
@@ -124,7 +124,7 @@ $four = [2+2]
 Here, `$four` is the name of the variable.
 After execution of the statement, 4 is stored in the variable `$four`.
 
-Variable name is a `$` followed by one or more alphanumeric or underscore character.
+A variable name is a `$` followed by one or more alphanumeric or underscore characters.
 
 ### Constants
 There are 3 constants present in the language.
@@ -138,14 +138,14 @@ There are 3 constants present in the language.
 ### Expression
 An expression is used to do arithmetic or logical operations on literals, variables, or constants.
 
-The code snippet below shows the use of expression.
+The code snippet below shows the use of an expression.
 
 ```c
 $a = [1+2]
 $aSquaredMod10 = [($a*$a)%10]
 ```
 
-The precedence of the operators are as follows (in descending order)
+The precedence of the operators is as follows (in descending order)
 
 | Operator                        | Description |
 | ------------------------------- | ----------- |
@@ -162,8 +162,8 @@ The associativity for all operators is from left to right.
 > The logical operators evaluate to 0 instead of `false` and 1 instead of `true`.
 
 #### Random expression
-Random numbers are important part of games.
-We can generate random number as follows.
+Random numbers are an important part of games.
+We can generate random numbers as follows.
 
 ```c
 $randomNumberOnADice = r[1][6] 
@@ -172,7 +172,7 @@ $randomNumberOnADice = r[6][1] // Same as previous statement
 $anotherRandomNumber = r[0][!W-1]
 ```
 
-> Random expression are also expressions.
+> Random expressions are also expressions.
 
 ### Selection
 We can use `if` and `if not` to make selections.
@@ -217,7 +217,7 @@ clear
 
 #### display
 It is used to overlay a shape on the screen.
-The top-left coordinate of the position where the shape is to be overlayed are required.
+The top-left coordinate of the position where the shape is to be overlayed is required.
 
 ```vim
 display #someShape @ ([$x], [$y])
@@ -237,7 +237,7 @@ goto ~anotherState
 Any code following `goto` is not executed.
 
 ### Button handler
-Button handlers are defined inside state.
+Button handlers are defined inside the state.
 There are five button handlers - `@X`, `@Y`, `@A`, `@B`, `@START`.
 We need not define all the button handlers.
 
@@ -252,7 +252,7 @@ In case of any issues, post to the issues section of this GitHub repository.
 Please provide a minimum reproducible example.
 
 # Features on the queue
-We are looking forward to implement the following features in the future.
+We are looking forward to implementing the following features in the future.
 
 - [ ] An optional `else` with `if`
 
