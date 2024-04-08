@@ -1,4 +1,7 @@
 # Console Game Language
+
+![Screenshot of the Retro Console](doc/assets/screenshot-smiley.png)
+
 You can use this language to create simple games that run on a simple retro console simulator.
 It is recommended to use `.cg` as the file extension.
 
