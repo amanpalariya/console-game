@@ -1,0 +1,9 @@
+[project]
+name = "console-game-language"
+version = "1.0.0"
+description = "A new programming language (compiler & runtime) for retro console games"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pygame>=2.6.1",
+]
