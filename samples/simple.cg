@@ -1,0 +1,11 @@
+~x_state
+
+#x_shape {
+#.#
+.#.
+#.#
+}
+
+~x_state {
+    display #x_shape @ ([10], [10])
+}

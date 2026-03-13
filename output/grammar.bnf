@@ -1,0 +1,50 @@
+prog                 := 'state-name' 'newline' top-level-stmts 'newline' '__eof__'
+top-level-stmts      := top-level-stmts 'newline' top-level-stmt
+                      | top-level-stmt
+top-level-stmt       := shape-def
+                      | state-def
+shape-def            := 'shape-name' 'left-brace' 'newline' 'shape' 'right-brace'
+state-def            := 'state-name' 'left-brace' 'newline' instate-stmts 'newline' 'right-brace'
+instate-stmts        := instate-stmts 'newline' instate-stmt
+                      | instate-stmt
+instate-stmt         := variable-update-stmt
+                      | screen-update-stmt
+                      | goto-stmt
+                      | selection-stmt
+                      | iteration-stmt
+                      | btn-handler
+expression           := 'single-expression'
+                      | 'rand' 'single-expression' 'single-expression'
+variable-update-stmt := 'variable' 'assignment-op' expression
+screen-update-stmt   := 'clear-screen'
+                      | 'display-shape' 'shape-name' 'coordinate-op' 'left-paren' expression 'comma' expression 'right-paren'
+goto-stmt            := 'goto' 'state-name'
+selection-stmt       := if-stmt
+                      | if-not-stmt
+if-stmt              := 'if' expression 'left-brace' 'newline' inif-stmts 'newline' 'right-brace'
+if-not-stmt          := 'if' 'not' expression 'left-brace' 'newline' inif-stmts 'newline' 'right-brace'
+inif-stmts           := inif-stmts 'newline' inif-stmt
+                      | inif-stmt
+inif-stmt            := variable-update-stmt
+                      | screen-update-stmt
+                      | goto-stmt
+                      | selection-stmt
+                      | iteration-stmt
+iteration-stmt       := while-stmt
+                      | while-not-stmt
+while-stmt           := 'while' expression 'left-brace' 'newline' inwhile-stmts 'newline' 'right-brace'
+while-not-stmt       := 'while' 'not' expression 'left-brace' 'newline' inwhile-stmts 'newline' 'right-brace'
+inwhile-stmts        := inwhile-stmts 'newline' inwhile-stmt
+                      | inwhile-stmt
+inwhile-stmt         := variable-update-stmt
+                      | screen-update-stmt
+                      | goto-stmt
+                      | selection-stmt
+                      | iteration-stmt
+btn-handler          := 'handler-name' 'left-brace' 'newline' inhandler-stmts 'newline' 'right-brace'
+inhandler-stmts      := inhandler-stmts 'newline' inhandler-stmt
+                      | inhandler-stmt
+inhandler-stmt       := variable-update-stmt
+                      | screen-update-stmt
+                      | goto-stmt
+                      | selection-stmt

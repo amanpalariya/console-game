@@ -1,0 +1,37 @@
+prog
+├── state-name: ~x_state
+├── newline: \n\n
+├── top-level-stmts
+│   ├── top-level-stmts
+│   │   └── top-level-stmt
+│   │       └── shape-def
+│   │           ├── shape-name: #x_shape
+│   │           ├── left-brace: {
+│   │           ├── newline: \n
+│   │           ├── shape: #.#
+│   │           │          .#.
+│   │           │          #.#
+│   │           │          
+│   │           └── right-brace: }
+│   ├── newline: \n\n
+│   └── top-level-stmt
+│       └── state-def
+│           ├── state-name: ~x_state
+│           ├── left-brace: {
+│           ├── newline: \n
+│           ├── instate-stmts
+│           │   └── instate-stmt
+│           │       └── screen-update-stmt
+│           │           ├── display-shape: display
+│           │           ├── shape-name: #x_shape
+│           │           ├── coordinate-op: @
+│           │           ├── left-paren: (
+│           │           ├── expression
+│           │           │   └── single-expression: [10]
+│           │           ├── comma: ,
+│           │           ├── expression
+│           │           │   └── single-expression: [10]
+│           │           └── right-paren: )
+│           ├── newline: \n
+│           └── right-brace: }
+└── newline: \n
