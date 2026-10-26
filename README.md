@@ -1,12 +1,28 @@
-# Console Game Language
+<p align="center">
+  <img src="doc/assets/logo.png" alt="Console Game Language logo" width="160">
+</p>
 
-![Screenshot of the Retro Console](doc/assets/screenshot-smiley.png)
+<h1 align="center">Console Game Language</h1>
 
-You can use this language to create simple games that run on a simple retro console simulator.
-It is recommended to use `.cg` as the file extension.
+<p align="center">
+  <a href="#how-to-run">Get started</a> &nbsp;·&nbsp;
+  <a href="#the-language">Learn the language</a> &nbsp;·&nbsp;
+  <a href="samples">Explore examples</a>
+</p>
 
-Jump to the **The Language** section to learn how to code in this language.
-The `samples` directory contains a few sample code files, please try running them to understand the working.
+---
+
+Write games in `.cg` files and run them on a console simulator built with PyGame.
+The default console gives you a 30 × 30 pixel display, six buttons, and a 30 Hz clock.
+Games are state machines: each tick runs the current state's code to update the display and respond to input.
+
+<p align="center">
+  <img src="doc/assets/screenshot-smiley.png" alt="The retro console simulator displaying a pixel smiley face" width="300"><br>
+  <em>A small screen. Plenty of room to play.</em>
+</p>
+
+Try the [Snake example](samples/snake.cg), or start with [a simple program](samples/simple.cg)
+and the [language reference](#the-language).
 
 ## Technical details
 The core implements a RegEx-based lexical analyzer and an LR(0) parser.
